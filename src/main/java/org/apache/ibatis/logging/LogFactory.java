@@ -31,10 +31,11 @@ public final class LogFactory {
   private static Constructor<? extends Log> logConstructor;
 
   static {
+    tryImplementation(LogFactory::useLog4JLogging);
     tryImplementation(LogFactory::useSlf4jLogging);
     tryImplementation(LogFactory::useCommonsLogging);
     tryImplementation(LogFactory::useLog4J2Logging);
-    tryImplementation(LogFactory::useLog4JLogging);
+//    tryImplementation(LogFactory::useLog4JLogging);
     tryImplementation(LogFactory::useJdkLogging);
     tryImplementation(LogFactory::useNoLogging);
   }

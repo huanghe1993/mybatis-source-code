@@ -77,13 +77,32 @@ public class XMLConfigBuilder extends BaseBuilder {
     this(inputStream, environment, null);
   }
 
+  /**
+   * XMLConfigBuilder构造函数，该构造函数会根据InputStream创建一个XPathParser对象。该对象会维护一个document属，该属性就是
+   * mybatis-config.xml配置文件解析为的 Document对象。
+   *
+   * @param inputStream mybatis-config.xml的文件输入流
+   * @param environment 环境变量信息
+   * @param props 属性配置
+   */
   public XMLConfigBuilder(InputStream inputStream, String environment, Properties props) {
+    // 创建XPathParser对象。validation,XMLMapperEntityResolver是为解析成document对象作出贡献
     this(new XPathParser(inputStream, true, props, new XMLMapperEntityResolver()), environment, props);
   }
 
+    /**
+     * 真正的初始化的方法：
+     * 1、会调用父类的构造函数 BaseBuilder方法，该方法会维护一个Configuration对象
+     *
+     *
+     * @param parser XPathParser
+     * @param environment  环境变量信息
+     * @param props 属性配置
+     */
   private XMLConfigBuilder(XPathParser parser, String environment, Properties props) {
     super(new Configuration());
     ErrorContext.instance().resource("SQL Mapper Configuration");
+    // 设置父类属性configuration的variables
     this.configuration.setVariables(props);
     this.parsed = false;
     this.environment = environment;
